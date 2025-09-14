@@ -173,3 +173,69 @@ nav .menu-toggle {
   height: auto;
   border-radius: 8px;
 }
+
+/* Backend terminal styles */
+#terminal-panel {
+  background-color: #0c1222;
+  border: 1px solid var(--accent-color);
+  padding: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 1rem;
+}
+
+.terminal-output {
+  height: 200px;
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.terminal-input-container {
+  display: flex;
+  align-items: center;
+  font-family: 'Courier New', monospace;
+  color: var(--accent-color);
+}
+
+.terminal-input-container span {
+  margin-right: 0.5rem;
+}
+
+.terminal-input-container input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--accent-color);
+  color: var(--text-color);
+  padding: 0.25rem;
+  font-family: 'Courier New', monospace;
+  outline: none;
+}
+
+/* Style for backend login form */
+#login-panel input[type="password"] {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--accent-color);
+  padding: 0.5rem;
+  color: var(--text-color);
+  font-family: 'Montserrat', sans-serif;
+  outline: none;
+}
+
+#login-panel button {
+  margin-top: 0.5rem;
+  background-color: var(--accent-color);
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-family: 'Orbitron', sans-serif;
+  cursor: pointer;
+}
+
+#login-panel button:hover {
+  background-color: #d9651f;
+}

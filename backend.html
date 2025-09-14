@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Helios Backend – Helios Aerospace</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <nav>
+    <div class="logo">
+      <img src="images/logo.png" alt="Helios logo">
+      <span>Helios Aerospace</span>
+    </div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="missions.html">Mars Mission</a></li>
+      <li><a href="phoenix.html">Phoenix</a></li>
+      <li><a href="happy-valley.html">Happy Valley</a></li>
+      <li><a href="dev-ayesa.html">Dev Ayesa</a></li>
+      <li><a href="backend.html" class="active">Backend</a></li>
+    </ul>
+  </nav>
+  <header class="hero">
+    <h1>Operations Console</h1>
+    <p>Authorized personnel only</p>
+  </header>
+  <section class="section">
+    <!-- Login panel shown until correct password is entered -->
+    <div id="login-panel">
+      <h2>Access Protected</h2>
+      <p>Enter password to continue:</p>
+      <input type="password" id="backend-password" placeholder="Password">
+      <button id="backend-login-button">Enter</button>
+      <p id="login-error" style="color: var(--accent-color); display: none; margin-top: 0.5rem;">Incorrect password.</p>
+    </div>
+    <!-- Terminal panel hidden by default -->
+    <div id="terminal-panel" style="display: none;">
+      <div id="terminal-output" class="terminal-output"></div>
+      <div class="terminal-input-container">
+        <span>&gt;</span>
+        <input type="text" id="terminal-input" autocomplete="off">
+      </div>
+    </div>
+  </section>
+  <footer class="footer">
+    <p>&copy; 2006 Helios Aerospace</p>
+  </footer>
+  <!-- Inline script for backend functionality -->
+  <script>
+    (function() {
+      const password = 'Helios1994';
+      const loginPanel = document.getElementById('login-panel');
+      const terminalPanel = document.getElementById('terminal-panel');
+      const loginBtn = document.getElementById('backend-login-button');
+      const passwordInput = document.getElementById('backend-password');
+      const loginError = document.getElementById('login-error');
+      loginBtn.addEventListener('click', function() {
+        if (passwordInput.value === password) {
+          loginPanel.style.display = 'none';
+          terminalPanel.style.display = 'block';
+          passwordInput.value = '';
+          loginError.style.display = 'none';
+          printOutput('Welcome to the Helios Operations Console. Type "help" for commands.');
+          document.getElementById('terminal-input').focus();
+        } else {
+          loginError.style.display = 'block';
+        }
+      });
+      // Press Enter on password field triggers login
+      passwordInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          loginBtn.click();
+        }
+      });
+      const terminalInput = document.getElementById('terminal-input');
+      const terminalOutput = document.getElementById('terminal-output');
+      function printOutput(text) {
+        const line = document.createElement('div');
+        line.textContent = text;
+        terminalOutput.appendChild(line);
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+      }
+      terminalInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          const command = terminalInput.value.trim();
+          if (command.length > 0) {
+            printOutput('> ' + command);
+            handleCommand(command);
+            terminalInput.value = '';
+          }
+        }
+      });
+      function handleCommand(cmd) {
+        switch(cmd.toLowerCase()) {
+          case 'help':
+            printOutput('Available commands: help, status, drill start, drill stop, hab status, phoenix status, lunar status, secret, clear, exit');
+            break;
+          case 'status':
+            printOutput('Systems nominal. All stations running within parameters.');
+            break;
+          case 'drill start':
+            printOutput('Command accepted. Drilling operations beginning in Gagarin Ridge sector.');
+            break;
+          case 'drill stop':
+            printOutput('Command accepted. Drilling operations halted.');
+            break;
+          case 'hab status':
+            printOutput('Happy Valley life support: optimal. Hydroponics: green. Power: stable.');
+            break;
+          case 'phoenix status':
+            printOutput('Phoenix station rotation: 1 RPM. Docked vessels: 3. Reactor output: 97%.');
+            break;
+          case 'lunar status':
+            printOutput('Lunar He3 refinery: operating at 62% capacity. Crew complement: 12.');
+            break;
+          case 'secret':
+            printOutput('Helios internal memo: "Dream big. The future belongs to those who dare."');
+            break;
+          case 'clear':
+            terminalOutput.textContent = '';
+            break;
+          case 'exit':
+            terminalPanel.style.display = 'none';
+            loginPanel.style.display = 'block';
+            break;
+          default:
+            printOutput('Unrecognized command. Type "help" for a list of commands.');
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
