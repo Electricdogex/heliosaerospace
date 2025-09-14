@@ -1,0 +1,131 @@
+/*
+ * Helios Aerospace Fan Website — Stylesheet
+ *
+ * This CSS file defines a dark, modern theme inspired by the in‑universe Helios
+ * Aerospace branding seen in For All Mankind.  Colors and layouts were chosen
+ * to evoke a sense of space exploration while remaining readable.  The
+ * responsive navigation bar collapses into a hamburger menu on smaller screens.
+ */
+
+:root {
+  /* Core colors */
+  --background-color: #0a0f23;   /* deep space background */
+  --text-color: #e4eaf3;         /* light text for contrast */
+  --accent-color: #f58025;       /* Helios orange accent */
+  --nav-background: #101a32;     /* slightly lighter panel for navigation */
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+/* Navigation bar */
+nav {
+  background-color: var(--nav-background);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  position: relative;
+}
+
+nav .logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+nav .logo img {
+  height: 40px;
+  width: auto;
+  margin-right: 10px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  margin-left: 20px;
+}
+
+nav .menu-toggle {
+  display: none;
+  cursor: pointer;
+  font-size: 1.6rem;
+  color: var(--accent-color);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  nav ul {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: var(--nav-background);
+    z-index: 10;
+  }
+  nav ul.open {
+    display: flex;
+  }
+  nav .menu-toggle {
+    display: block;
+  }
+}
+
+/* Hero section */
+.hero {
+  background-image: url('images/starfield.png');
+  background-size: cover;
+  background-position: center;
+  padding: 8rem 1rem;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+/* Generic section styles */
+.section {
+  padding: 2rem 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.section h2 {
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--nav-background);
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  margin-top: 2rem;
+}
