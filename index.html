@@ -1,328 +1,42 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Helios Aerospace — Fanmade</title>
-  <meta name="description" content="A fanmade homage to Helios Aerospace from For All Mankind. Programs, vehicles, history, and news—curated by fans for fans." />
-  <meta name="theme-color" content="#0a0a0a" />
-  <meta property="og:title" content="Helios Aerospace — Fanmade" />
-  <meta property="og:description" content="A fanmade homage to Helios Aerospace from For All Mankind." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="/assets/og-helios.jpg" />
-  <meta name="robots" content="index,follow" />
-  <link rel="icon" href="/assets/favicon.svg" />
-  <style>
-    :root{
-      --bg:#0b0c10;         /* near-black */
-      --bg-elev:#11131a;    /* panels */
-      --ink:#eaeef5;        /* primary text */
-      --muted:#9aa4b2;      /* secondary text */
-      --brand:#ff6a00;      /* Helios orange */
-      --brand-2:#ffa057;    /* accent */
-      --ok:#37d67a;         /* success */
-      --warn:#ffd166;       /* warn */
-      --err:#ff4d4f;        /* error */
-      --ring: 0 0 0 2px color-mix(in oklab, var(--brand) 50%, transparent);
-      --radius: 18px;
-      --shadow: 0 10px 30px -10px rgba(0,0,0,.6);
-      --maxw: 1200px;
-    }
-    html,body{height:100%}
-    *{box-sizing:border-box}
-    body{
-      margin:0; background:radial-gradient(1200px 600px at 75% -20%, #1a1d27 0%, transparent 55%), var(--bg);
-      color:var(--ink); font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, Noto Sans, sans-serif;
-      letter-spacing:.2px;
-    }
-    a{color:var(--brand); text-decoration:none}
-    a:hover{text-decoration:underline}
-    .container{max-width:var(--maxw); margin-inline:auto; padding: clamp(16px, 2vw, 24px)}
-    /* Top bar */
-    .top{position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(8px); background: color-mix(in oklab, var(--bg), black 10% / 40%)}
-    .nav{display:flex; align-items:center; justify-content:space-between; gap:16px;}
-    .logo{display:flex; align-items:center; gap:12px; font-weight:700; letter-spacing:.6px}
-    .logo-mark{
-      inline-size:34px; block-size:34px; border-radius:12px;
-      background: conic-gradient(from 220deg, var(--brand), var(--brand-2));
-      position:relative; box-shadow: 0 2px 12px -2px color-mix(in oklab, var(--brand) 50%, transparent);
-    }
-    .logo-mark::after{
-      content:""; position:absolute; inset:6px; border-radius:8px; background: radial-gradient(circle at 60% 30%, #fff3, #0000 40%), #14161f; 
-    }
-    .nav ul{display:flex; gap:18px; list-style:none; margin:0; padding:0}
-    .nav a{color:var(--ink); opacity:.88}
-    .nav a[aria-current="page"], .nav a:hover{opacity:1; color:var(--ink)}
-    .cta{display:inline-flex; align-items:center; gap:10px; background:linear-gradient(180deg, var(--brand), #ff4f00);
-      color:black; font-weight:700; padding:10px 14px; border-radius:999px; box-shadow:var(--shadow)}
-    /* Hero */
-    .hero{position:relative; overflow:hidden; border-radius: calc(var(--radius) * 1.25); background: linear-gradient(180deg, #0d0f16, #0a0c11); box-shadow: var(--shadow)}
-    .hero-grid{display:grid; grid-template-columns: 1.1fr .9fr; gap: clamp(20px, 4vw, 36px)}
-    .hero h1{font-size: clamp(32px, 5vw, 54px); line-height:1.1; margin:0 0 12px 0}
-    .hero p{color:var(--muted); margin:0 0 20px 0}
-    .hero .actions{display:flex; gap:12px; flex-wrap:wrap}
-    .hero .panel{background: #0f121a; border:1px solid #22283a; border-radius: var(--radius); padding:16px}
-    .badge{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:#121622; border:1px solid #22283a; color:var(--muted); font-size:13px}
-    .starfield{position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(2px 2px at 20% 30%, #fff6, #0000 40%),radial-gradient(1px 1px at 60% 70%, #fff8, #0000 40%),radial-gradient(1.2px 1.2px at 85% 20%, #fff5, #0000 40%),radial-gradient(1px 1px at 40% 80%, #fff5, #0000 40%)}
-    @keyframes twinkle {from{opacity:.5} 50%{opacity:1} to{opacity:.5}}
-    .starfield{animation: twinkle 5s ease-in-out infinite}
-    /* Sections */
-    section{margin-block: clamp(28px, 6vw, 56px)}
-    h2{font-size: clamp(24px, 3.6vw, 36px); line-height:1.1; margin:0 0 14px 0}
-    .muted{color:var(--muted)}
-    .grid{display:grid; gap: clamp(14px, 2.6vw, 22px)}
-    .grid.cols-3{grid-template-columns: repeat(auto-fit, minmax(250px,1fr))}
-    .card{background:var(--bg-elev); border:1px solid #1b2030; border-radius: var(--radius); padding:18px; box-shadow: var(--shadow)}
-    .card h3{margin:0 0 6px 0; font-size:20px}
-    .card p{margin:0; color:var(--muted)}
-    .tag{display:inline-block; padding:4px 8px; border-radius:999px; background:#151927; border:1px solid #272e45; color:#a7b2c7; font-size:12px}
-    .pill-row{display:flex; flex-wrap:wrap; gap:8px}
-    .meta{display:flex; gap:12px; align-items:center; color:#aab3c2; font-size:13px}
-    /* Timeline */
-    .timeline{position:relative; padding-left:20px}
-    .timeline::before{content:""; position:absolute; left:8px; top:0; bottom:0; width:2px; background:#242b3f}
-    .t-item{position:relative; margin:16px 0 0 0; padding-left:16px}
-    .t-item::before{content:""; position:absolute; left:-2px; top:.45em; width:10px; height:10px; background:var(--brand); border-radius:50%; box-shadow:0 0 0 4px #1a1620}
-    /* Footer */
-    footer{border-top:1px solid #1b2030; color:#98a4b6}
-    .footgrid{display:grid; grid-template-columns: 1fr auto; gap:16px; align-items:center}
-    .disclaimer{font-size:12px; color:#93a0b4}
-    /* Responsive */
-    @media (max-width: 880px){
-      .hero-grid{grid-template-columns: 1fr}
-      .nav ul{display:none}
-      .nav button.menu{display:inline-flex}
-    }
-    @media (min-width: 881px){
-      .nav button.menu{display:none}
-    }
-    /* Simple "drawer" menu */
-    .drawer{position:fixed; inset:0; display:none; z-index:60;}
-    .drawer[open]{display:block}
-    .drawer-backdrop{position:absolute; inset:0; background:#0008}
-    .drawer-panel{position:absolute; right:0; top:0; bottom:0; width:min(88vw, 360px); background:#0e1118; border-left:1px solid #1d2233; padding:18px; overflow:auto}
-    .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
-    /* Focus ring */
-    :focus-visible{outline: none; box-shadow: var(--ring); border-radius:8px}
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Helios Aerospace</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <div class="top">
-    <div class="container nav" role="navigation" aria-label="Primary">
-      <a class="logo" href="#" aria-current="page">
-        <span class="logo-mark" aria-hidden="true"></span>
-        <span>Helios Aerospace <span class="muted" style="font-weight:500">(Fanmade)</span></span>
-      </a>
-      <ul>
-        <li><a href="#programs">Programs</a></li>
-        <li><a href="#vehicles">Fleet</a></li>
-        <li><a href="#history">History</a></li>
-        <li><a href="#news">Newsroom</a></li>
-        <li><a href="#careers">Careers</a></li>
-      </ul>
-      <div style="display:flex; gap:10px; align-items:center">
-        <a class="cta" href="#careers">Join the Mission</a>
-        <button class="menu" aria-controls="drawer" aria-expanded="false" aria-label="Open Menu" style="background:#141826; color:var(--ink); border:1px solid #232a40; padding:10px 12px; border-radius:12px">☰</button>
-      </div>
+  <nav>
+    <div class="logo">
+      <img src="images/logo.png" alt="Helios logo">
+      <span>Helios Aerospace</span>
     </div>
-  </div>
-
-  <header class="container hero" style="margin-top:14px">
-    <div class="starfield" aria-hidden="true"></div>
-    <div class="container" style="padding: clamp(18px, 3.6vw, 30px)">
-      <div class="hero-grid">
-        <div>
-          <span class="badge">⚠️ Fan Project — Not affiliated with Apple TV+ or the creators of <em>For All Mankind</em>.</span>
-          <h1>Building the next decade of private spaceflight — in fiction and fandom.</h1>
-          <p>Welcome to a community-built archive and showcase of <strong>Helios Aerospace</strong>: timelines, vehicles, missions, and in-universe culture inspired by the series <em>For All Mankind</em>. Explore lovingly crafted dossiers, renders, and research notes.</p>
-          <div class="actions">
-            <a class="cta" href="#programs">Explore Programs →</a>
-            <a class="badge" href="#news">See Updates</a>
-          </div>
-        </div>
-        <div class="panel">
-          <h3 style="margin:0 0 8px 0">Spotlight: Mars Initiative</h3>
-          <p class="muted">A curated look at the Helios Mars architecture—transfer stages, surface ops, and the economics of multi-synod campaigns.</p>
-          <div class="pill-row" style="margin-top:12px">
-            <span class="tag">Transit Hab</span>
-            <span class="tag">Nuclear Thermal</span>
-            <span class="tag">ISRU</span>
-            <span class="tag">Surface Logistics</span>
-          </div>
-          <img alt="Artist impression of Helios Mars transfer vehicle (fanmade)" src="https://images.unsplash.com/photo-1580428180163-3fcf06f13d97?q=80&w=1600&auto=format&fit=crop" style="margin-top:12px; width:100%; border-radius:14px; aspect-ratio:16/9; object-fit:cover" />
-        </div>
-      </div>
-    </div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="missions.html">Mars Mission</a></li>
+      <li><a href="phoenix.html">Phoenix</a></li>
+      <li><a href="happy-valley.html">Happy Valley</a></li>
+      <li><a href="dev-ayesa.html">Dev Ayesa</a></li>
+    </ul>
+  </nav>
+  <header class="hero">
+    <h1>Pioneering the Red Frontier</h1>
+    <p>Welcome to Helios Aerospace — forging a new future for humanity in space.</p>
   </header>
-
-  <main>
-    <section id="programs" class="container">
-      <h2>Programs</h2>
-      <p class="muted">Major initiatives attributed to Helios in-universe, with fan research and citations back to episodes, interviews, and production notes.</p>
-      <div class="grid cols-3" style="margin-top:12px">
-        <article class="card">
-          <h3>JAMestown Commercial Ops</h3>
-          <p>Transition of lunar base operations to private–public models. Focus on power, propellant, and heavy ISRU.</p>
-          <div class="pill-row" style="margin-top:10px">
-            <span class="tag">Lunar Power</span><span class="tag">Regolith</span><span class="tag">Cargo Lander</span>
-          </div>
-        </article>
-        <article class="card">
-          <h3>Mars Initiative</h3>
-          <p>NTR transfer stages, reusable surface ascent vehicles, and contract logistics across synods.</p>
-          <div class="pill-row" style="margin-top:10px">
-            <span class="tag">NTR</span><span class="tag">Tankers</span><span class="tag">Synod Windows</span>
-          </div>
-        </article>
-        <article class="card">
-          <h3>Astroservices</h3>
-          <p>On-orbit servicing and depot operations. Tugs, prop transfer, and station expansion modules.</p>
-          <div class="pill-row" style="margin-top:10px">
-            <span class="tag">Depots</span><span class="tag">Tugs</span><span class="tag">Robotics</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="vehicles" class="container">
-      <h2>Fleet & Vehicles</h2>
-      <p class="muted">Fanmade spec sheets grounded in show canon: approximate performance, roles, and mission configs.</p>
-      <div class="grid cols-3" style="margin-top:12px">
-        <article class="card">
-          <h3>Pathfinder Lander</h3>
-          <p>Heavy lunar lander optimized for cargo + crew hybrid ops. Autonomous offload and LOX/LH2 compatibility.</p>
-          <p class="meta">Δv ~ 5.2 km/s • Payload 15–20 t</p>
-        </article>
-        <article class="card">
-          <h3>Mars Ascent Vehicle (MAV)</h3>
-          <p>Two-stage methane/LOX architecture with ISRU refuel capability. Designed for multiple sorties.</p>
-          <p class="meta">Crew 2–4 • Δv ~ 6.0 km/s</p>
-        </article>
-        <article class="card">
-          <h3>Orbital Transfer Tug</h3>
-          <p>Reusable hydrolox tug with storable OMS pack for long loiter. Docking: IDSS.</p>
-          <p class="meta">Thrust 100 kN • Isp 450 s</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="history" class="container">
-      <h2>History & Timeline</h2>
-      <div class="timeline">
-        <div class="t-item">
-          <strong>1990s:</strong> Early commercial partnerships; lunar surface industrialization concepts emerge.
-        </div>
-        <div class="t-item">
-          <strong>2000s:</strong> Private investment accelerates—tug prototypes, depot studies, and lunar logistics.
-        </div>
-        <div class="t-item">
-          <strong>2010s:</strong> Mars systems definition: NTR studies, surface architecture, and risk trades.
-        </div>
-        <div class="t-item">
-          <strong>2020s:</strong> Operational tempo increases; mixed government–commercial campaigns.
-        </div>
-      </div>
-    </section>
-
-    <section id="news" class="container">
-      <h2>Newsroom</h2>
-      <p class="muted">Fan updates, artwork drops, and analysis posts. Submit your article via the form below.</p>
-      <div class="grid cols-3" style="margin-top:12px">
-        <article class="card">
-          <h3>Render Pack v1.0 Released</h3>
-          <p>High-res fan logos, patches, and printable mission placards. Community contributions welcome.</p>
-          <p class="meta">📅 Sep 2025 · by <em>ElectricDogeX</em></p>
-        </article>
-        <article class="card">
-          <h3>Mars Synod Planner</h3>
-          <p>An interactive tool (coming soon) to visualize launch windows, transfer Δv, and surface stay durations.</p>
-          <p class="meta">📅 Sep 2025 · Tooling</p>
-        </article>
-        <article class="card">
-          <h3>Interview Roundup</h3>
-          <p>Collected cast/crew commentary that inform tech choices seen on screen. Sourced and footnoted.</p>
-          <p class="meta">📅 Aug 2025 · Research</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="careers" class="container">
-      <h2>Careers (Fan Roles)</h2>
-      <p class="muted">We’re gathering a small volunteer crew to help with content: writers, 3D artists, web devs, and researchers. No pay, just space-nerd joy and proper credit.</p>
-      <form id="join" class="card" style="display:grid; gap:12px">
-        <label>Display Name
-          <input name="name" required placeholder="Gordo, Tracy, or… you" />
-        </label>
-        <label>Role of Interest
-          <select name="role" required>
-            <option value="Writer">Writer</option>
-            <option value="3D Artist">3D Artist</option>
-            <option value="Researcher">Researcher</option>
-            <option value="Web Dev">Web Dev</option>
-            <option value="Other">Other</option>
-          </select>
-        </label>
-        <label>Contact (email or handle)
-          <input name="contact" required placeholder="you@example.com or @handle" />
-        </label>
-        <label>Notes
-          <textarea name="notes" rows="4" placeholder="What do you want to help with?"></textarea>
-        </label>
-        <button class="cta" type="submit">Submit Interest</button>
-        <p id="form-note" class="muted" aria-live="polite">This is a demo form; configure a backend to receive submissions.</p>
-      </form>
-    </section>
-  </main>
-
-  <footer class="container">
-    <div class="footgrid">
-      <p>© <span id="y"></span> Helios Aerospace Fan Project. All rights reserved by their respective owners.</p>
-      <div style="display:flex; gap:10px">
-        <a href="#">GitHub</a>
-        <a href="#">Discord</a>
-        <a href="#">RSS</a>
-      </div>
-    </div>
-    <p class="disclaimer" style="margin-top:8px">
-      This is an unofficial, fanmade website. <strong>Helios Aerospace</strong> and <em>For All Mankind</em> are properties of their respective owners. No infringement intended. All trademarks and copyrighted material belong to their owners and are used here under fan-art/fair-use principles. Remove on request.
-    </p>
+  <section class="section">
+    <h2>About Helios</h2>
+    <p>Helios Aerospace is a visionary, multi‑national aerospace company founded in 1987 by Dev Ayesa and Richard Hilliard in Houston, Texas.  Building on a breakthrough in nuclear fusion, Helios won a NASA contract to mine Helium‑3 on the Moon in 1987 and has since expanded into space manufacturing and energy production.  In 1992 Helios purchased the Polaris orbital hotel and repurposed it into the <em>Phoenix</em> spacecraft, announcing a bold crewed mission to Mars for 1994. </p>
+    <p>By 2006, Helios has established itself as a cornerstone of Mars exploration: it landed its own crew on Mars in the mid‑1990s, constructed a base on the red planet, and later converted the Phoenix into a space station.  Helios now provides critical infrastructure for the Mars‑7 Alliance and the Happy Valley colony.</p>
+  </section>
+  <section class="section">
+    <h2>Our Vision</h2>
+    <p>Helios was founded to push humanity beyond low Earth orbit and into the solar system.  From commercial lunar mining to building the <em>Phoenix</em> — the first privately‑funded interplanetary spacecraft — our ethos is one of innovation, courage and cooperation.  We believe a thriving human presence on Mars is not a fantasy but an achievable goal.  The events of the last decade have proved that nations and private companies can work together to overcome obstacles and build a home on another world.  Our continuing mission is to develop technology, infrastructure and opportunities that allow anyone to journey to the red planet.</p>
+  </section>
+  <footer class="footer">
+    <p>&copy; 2006 Helios Aerospace. This site is a fan project inspired by the world of <em>For All Mankind</em>.</p>
   </footer>
-
-  <dialog id="drawer" class="drawer" aria-label="Mobile Menu">
-    <div class="drawer-backdrop" data-close></div>
-    <div class="drawer-panel">
-      <button data-close class="badge" style="margin-bottom:10px">✕ Close</button>
-      <nav>
-        <a href="#programs">Programs</a><br/>
-        <a href="#vehicles">Fleet</a><br/>
-        <a href="#history">History</a><br/>
-        <a href="#news">Newsroom</a><br/>
-        <a href="#careers">Careers</a>
-      </nav>
-    </div>
-  </dialog>
-
-  <script>
-    // small UX helpers
-    document.getElementById('y').textContent = new Date().getFullYear();
-    const drawer = document.getElementById('drawer');
-    const menuBtn = document.querySelector('.menu');
-    const closeEls = drawer.querySelectorAll('[data-close]');
-    if (menuBtn){
-      menuBtn.addEventListener('click', () => { drawer.showModal(); menuBtn.setAttribute('aria-expanded','true') });
-    }
-    closeEls.forEach(el=>el.addEventListener('click', ()=>{ drawer.close(); menuBtn.setAttribute('aria-expanded','false') }));
-
-    // demo form capture (local only)
-    const form = document.getElementById('join');
-    form?.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(form).entries());
-      localStorage.setItem('helios-fan-join', JSON.stringify(data));
-      document.getElementById('form-note').textContent = 'Thanks! Stored locally. Hook this to Supabase, Airtable, or Formspree to collect real submissions.';
-      form.reset();
-    });
-  </script>
 </body>
 </html>
